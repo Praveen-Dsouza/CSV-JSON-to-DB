@@ -1,0 +1,6 @@
+customer_name,customer_address,customer_email,manager_name,contact_number,mapping_customer_id
+"Dollar Retail","ATL, Georgia","2@customer.com","John Scott","(1)7622314532",111
+"A&A Pharma","NYC, New York","3@customer.com","Daniel Smith","(1)2124657687",222
+"Maverik Convenience Store","Buffalo, New York","4@customer.com","George Brown","(1)3158675646",333
+"Target Retail","ATL, Georgia","5@customer.com","Jim Williams","(1)7622978675",444
+"Reliance Fresh","NYC, New York","6@customer.com","Dhawal Jain","(1)7622978675",555

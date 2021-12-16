@@ -1,0 +1,50 @@
+[
+	{
+		"customer_name" : "7 - Eleven Retail",
+		"customer_address" : "Cleveland, Tennessee",
+		"customer_email" : "1@customer.com",
+		"manager_name" : "Derek Ross",
+		"contact_number" : "(1)4235130514",
+		"mapping_customer_id": 111
+	},
+	{
+		"customer_name" : "Dollar Retail",
+		"customer_address" : "ATL, Georgia",
+		"customer_email" : "2@customer.com",
+		"manager_name" : "John Scott",
+		"contact_number" : "(1)7622314532",
+		"mapping_customer_id": 222
+	},
+	{
+		"customer_name" : "A&A Pharma",
+		"customer_address" : "NYC, New York",
+		"customer_email" : "3@customer.com",
+		"manager_name" : "Daniel Smith",
+		"contact_number" : "(1)2124657687",
+		"mapping_customer_id": 333
+	},
+	{
+		"customer_name" : "Maverik Convenience Store",
+		"customer_address" : "Buffalo, New York",
+		"customer_email" : "4@customer.com",
+		"manager_name" : "George Brown",
+		"contact_number" : "(1)3158675646",
+		"mapping_customer_id": 444
+	},
+	{
+		"customer_name" : "Target Retail",
+		"customer_address" : "ATL, Georgia",
+		"customer_email" : "5@customer.com",
+		"manager_name" : "Jim Williams",
+		"contact_number" : "(1)7622978675",
+		"mapping_customer_id": 555
+	},
+	{
+		"customer_name" : "Reliance Fresh",
+		"customer_address" : "NYC, New York",
+		"customer_email" : "6@customer.com",
+		"manager_name" : "Dhawal Jain",
+		"contact_number" : "(1)7622978675",
+		"mapping_customer_id": 666
+	}
+]
