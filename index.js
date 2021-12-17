@@ -6,83 +6,85 @@ const serverConfig = require('./config/serverConfig.js')
 const results = []
 let hasError
 
-// Connetion to DB 
+// User Input
+let filename = 'customer.json'
+
+// Connetion to DB  
 serverConfig.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("Database Connected!");
 });
 
-function csvToDb() {
-    rowCount = 2;
-    fs.createReadStream('customer.csv')
+// check valid csv data 
+function validateCsvToDb() {
+    fs.createReadStream(filename)
         .pipe(csv())
         .on('data', (data) => {
+
             if(data.customer_name == '' || data.customer_address =='' || data.customer_email == ''|| data.manager_name == '' || data.contact_number == '' || data.mapping_customer_id == ''
                 || Object.keys(data).length != 6
                 ) {
-                console.log('Error Data', rowCount)
-                rowCount++;
-                hasError = true
+                    console.log('Error Csv Data')
+                    hasError = true
             } else {
                 if (!parseInt(data.mapping_customer_id)) { // check if mapping customer id is Integer
-                    console.log('Invalid mapping customer ID on line ', rowCount, " of CSV")
-                    rowCount++;
                     hasError = true;
-                } else {
+                } else { 
+                    // converting array of objects to array of array and push in results array
                     results.push([data.customer_name,data.customer_address,data.customer_email,data.manager_name,data.contact_number,parseInt(data.mapping_customer_id)])
-                    rowCount++;
                 }
             }
         })
         .on('end', ()=> {
             console.log('end',results)
-     
-            checkFileHasError()
-
+            checkFileDataIsValid()
         })
 }
 
-function jsonToDb() {
-    let doc = fs.readFileSync('customer.json')
+// check valid json data 
+function validateJsonToDb() {
+    let doc = fs.readFileSync(filename)
     let data = JSON.parse(doc)  
     console.log('data', data)
 
     for( i=0 ; i < data.length; i++) {
+
         if( data[i].customer_name == '' || data[i].customer_address == '' || data[i].customer_email == ''|| data[i].manager_name == '' || data[i].contact_number == '' || data[i].mapping_customer_id == ''
         || Object.keys(data[i]).length != 6
         ) {
             hasError = true
-        console.log('Error Json')
+        console.log('Error Json Data')
         } 
         else {
             if (!parseInt(data[i].mapping_customer_id)) { // check if mapping customer id is Integer
                 hasError = true;
             } else {
+                // converting array of objects to array of array and push in results array
                 results.push([data[i].customer_name,data[i].customer_address,data[i].customer_email,data[i].manager_name,data[i].contact_number,parseInt(data[i].mapping_customer_id)])
                 console.log('results', results)
             }
         }
     }  
 
-    checkFileHasError()
+    checkFileDataIsValid()
 }
 
-// Checking file is JSON or CSV
-function getExtension(filename) {
-    let ext = filename.split('.').pop();
+// check file is JSON or CSV and parse it
+function getFileExtension(fileName) {
+    let ext = fileName.split('.').pop();
     if (ext === 'json') {
         console.log('JSON')
-        jsonToDb()
+        validateJsonToDb()
     } else if (ext === 'csv') {
         console.log('CSV')
-        csvToDb()
+        validateCsvToDb()
     } else {
         console.log('Invalid File')
     }
 }
-getExtension('customer.csv')
+getFileExtension(filename)
 
-// Insert Data in database
+// query to insert Data in database
 function insertDataIntoDB() {
     let sql = `INSERT INTO customer_data (customer_name,customer_address,customer_email,manager_name,contact_number,mapping_customer_id) VALUES ?`;
 
@@ -92,8 +94,8 @@ function insertDataIntoDB() {
     });
 }
 
-// Check file has error or not and then allow to insert data else error
-function checkFileHasError() {
+// Check file is valid and insert data into DB
+function checkFileDataIsValid() {
     if (hasError !== true) {
         console.log('Inserted Data Successfully')
         insertDataIntoDB()
